@@ -10,20 +10,68 @@ namespace _18._04._22
     internal class Program
     {
         static void Main(string[] args)
-        {   
-            AddPost(post);
-            //EditPostTitle(2);
-            //GetPostById(1);
+        {
+            //AddPost();
+            
+            try
+            {
+                EditPostTitle(3, "test1");
+            }
+            catch (NullReferenceException ex)
+            {
+
+                throw new NullReferenceException(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+
+                throw new NotFoundException(ex.Message);
+            }
+
+            try
+            {
+                GetPostById(2); 
+            }
+            catch (NullReferenceException ex)
+            {
+
+                throw new NullReferenceException(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+
+                throw new NotFoundException(ex.Message);
+            }
+
             //GetAllPosts();
-            //DeletePost(3);
+
+            try
+            {
+                DeletePost(2);
+            }
+            catch (NullReferenceException ex)
+            {
+
+                throw new NullReferenceException(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+
+                throw new NotFoundException(ex.Message);
+            }
         }
 
-        //1-
-        static void AddPost(Post post)
+        //1.
+        static void AddPost()
         {
-            post.Title = "Test";
-            post.Content = "Test";
-            post.Image = "test.jpg";
+            Post post = new Post()
+            {
+
+
+                Title = "test1",
+                Content = "Test",
+                Image = "test.jpg"
+            };
         
 
             using (AppDbContext dbContext = new AppDbContext())
@@ -35,7 +83,7 @@ namespace _18._04._22
             Console.WriteLine($"{post.Title} created");
         }
 
-        //2 deqiq bilmirem
+        //2 
         static void EditPostTitle(int? id,string title)
         {
             if (id == null)
@@ -50,13 +98,13 @@ namespace _18._04._22
                 {
                     throw new NotFoundException("Bele post tapilmadi");
                 }
-                post.Title = "Test";
+                post.Title = title;
                 dbContext.SaveChanges();
                 Console.WriteLine($"{post.Title} changed");
             }
         }
 
-        //3 mence duzdu
+        //3.
         static void GetPostById(int? id)
         {
             if (id == null)
@@ -73,10 +121,11 @@ namespace _18._04._22
                 Console.WriteLine($"{post.Title} {post.Content} {post.Image}");
 
 
-            }
+            }return;
+            
         }
 
-        //4+
+        //4.
         static void GetAllPosts()
         {
 
@@ -94,7 +143,7 @@ namespace _18._04._22
 
         }
         
-        //5+
+        //5.
         static void DeletePost(int? id)
         {
             if (id == null)
